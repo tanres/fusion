@@ -1,0 +1,2 @@
+com.tanres.fusion.framework.redis.config.RedisAutoConfiguration
+com.tanres.fusion.framework.redis.config.CacheAutoConfiguration

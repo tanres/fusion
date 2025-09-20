@@ -1,0 +1,47 @@
+name: fusion
+
+services:
+  # mysql
+  mysql:
+    image: mysql:8.0.28
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: root
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+  # redis
+  redis:
+    image: redis:6.2.5
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      TZ: Asia/Shanghai
+    command: redis-server --requirepass root --appendonly yes
+  # emqx
+  emqx:
+    image: emqx/emqx:5.8.8
+    container_name: emqx
+    restart: always
+    ports:
+      - "1883:1883"
+      - "8083:8083"
+      - "8084:8084"
+      - "8883:8883"
+      - "18083:18083"
+  # tdengine
+  tdengine:
+    image: tdengine/tdengine:3.3.6.6
+    container_name: tdengine
+    restart: always
+    ports:
+      - "6030:6030"
+      - "6041:6041"
+      - "6043:6043"
+      - "6060:6060"
