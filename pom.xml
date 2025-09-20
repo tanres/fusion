@@ -31,7 +31,7 @@
         <lombok.version>1.18.38</lombok.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <ip2region.version>2.7.0</ip2region.version>
+        <mybatis-plus.version>3.5.14</mybatis-plus.version>
 
         <!-- maven相关 -->
         <java.version>17</java.version>
@@ -40,29 +40,6 @@
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
         <flatten-maven-plugin.version>1.7.2</flatten-maven-plugin.version>
     </properties>
-
-    <profiles>
-        <!-- 开发环境 -->
-        <profile>
-            <id>dev</id>
-            <properties>
-                <profile.active>dev</profile.active>
-                <log.level>info</log.level>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-
-        <!-- 生产环境 -->
-        <profile>
-            <id>pro</id>
-            <properties>
-                <profile.active>pro</profile.active>
-                <log.level>warn</log.level>
-            </properties>
-        </profile>
-    </profiles>
 
     <dependencyManagement>
         <dependencies>
@@ -80,6 +57,19 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- mybatis-plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
 
             <dependency>
@@ -126,18 +116,6 @@
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
-                </configuration>
-            </plugin>
-
-            <!-- 单元测试插件 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <argLine>-Dfile.encoding=UTF-8</argLine>
-                    <groups>${profile.active}</groups>
-                    <excludedGroups>exclude</excludedGroups>
                 </configuration>
             </plugin>
 
