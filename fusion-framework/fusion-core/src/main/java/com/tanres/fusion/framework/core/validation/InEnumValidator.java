@@ -1,0 +1,44 @@
+package com.tanres.fusion.framework.core.validation;
+
+import com.tanres.fusion.framework.core.util.ArrayValuable;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class InEnumValidator implements ConstraintValidator<InEnum, Object> {
+
+    private List<?> values;
+
+    @Override
+    public void initialize(InEnum annotation) {
+        ArrayValuable<?>[] constants = annotation.value().getEnumConstants();
+        if (constants.length == 0) {
+            values = Collections.emptyList();
+        } else {
+            values = Arrays.asList(constants[0].array());
+        }
+    }
+
+    @Override
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+        // 为空时默认不校验，即认为通过
+        if (null == value) {
+            return true;
+        }
+
+        // 校验通过
+        if (values.contains(value)) {
+            return true;
+        }
+
+        // 校验不通过，自定义提示语句
+        context.disableDefaultConstraintViolation(); // 禁用默认的 message 的值
+        context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate()
+                .replaceAll("\\{value}", values.toString())).addConstraintViolation(); // 重新添加错误提示语句
+
+        return false;
+    }
+}

@@ -11,17 +11,17 @@ CREATE DATABASE IF NOT EXISTS `fusion`;
 USE `fusion`;
 
 -- 部门表
-DROP TABLE IF EXISTS `t_dept`;
-CREATE TABLE `t_dept`
+DROP TABLE IF EXISTS `sys_dept`;
+CREATE TABLE `sys_dept`
 (
     `id`             BIGINT      NOT NULL AUTO_INCREMENT COMMENT '部门id',
     `parent_id`      BIGINT      NOT NULL DEFAULT 0 COMMENT '父部门id',
     `name`           VARCHAR(32) NOT NULL COMMENT '部门名称',
     `leader_user_id` BIGINT      NULL     DEFAULT NULL COMMENT '负责人id',
-    `phone`          VARCHAR(11) NULL     DEFAULT NULL COMMENT '联系电话',
+    `mobile`         VARCHAR(11) NULL     DEFAULT NULL COMMENT '联系电话',
     `email`          VARCHAR(64) NULL     DEFAULT NULL COMMENT '邮箱',
     `sort`           INT         NOT NULL DEFAULT 0 COMMENT '显示排序',
-    `status`         TINYINT     NOT NULL DEFAULT 1 COMMENT '部门状态(0-停用 1-正常)',
+    `status`         TINYINT     NOT NULL DEFAULT 1 COMMENT '部门状态(0-禁用 1-启用)',
     `create_by`      VARCHAR(64) NULL     DEFAULT '' COMMENT '创建用户',
     `create_time`    DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_by`      VARCHAR(64) NULL     DEFAULT '' COMMENT '更新用户',
@@ -34,14 +34,14 @@ CREATE TABLE `t_dept`
   COLLATE = utf8mb4_unicode_ci COMMENT = '部门表';
 
 -- 岗位表
-DROP TABLE IF EXISTS `t_post`;
-CREATE TABLE `t_post`
+DROP TABLE IF EXISTS `sys_post`;
+CREATE TABLE `sys_post`
 (
     `id`          BIGINT       NOT NULL AUTO_INCREMENT COMMENT '岗位id',
     `name`        VARCHAR(64)  NOT NULL COMMENT '岗位名称',
     `code`        VARCHAR(128) NOT NULL COMMENT '岗位编码',
     `sort`        INT          NOT NULL DEFAULT 0 COMMENT '显示排序',
-    `status`      TINYINT      NOT NULL DEFAULT 1 COMMENT '岗位状态(0-停用 1-正常)',
+    `status`      TINYINT      NOT NULL DEFAULT 1 COMMENT '岗位状态(0-禁用 1-启用)',
     `remark`      VARCHAR(512) NULL     DEFAULT NULL COMMENT '备注',
     `create_by`   VARCHAR(64)  NULL     DEFAULT '' COMMENT '创建用户',
     `create_time` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -55,8 +55,8 @@ CREATE TABLE `t_post`
   COLLATE = utf8mb4_unicode_ci COMMENT = '岗位表';
 
 -- 用户表
-DROP TABLE IF EXISTS `t_user`;
-CREATE TABLE `t_user`
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user`
 (
     `id`              BIGINT       NOT NULL AUTO_INCREMENT COMMENT '岗位id',
     `username`        VARCHAR(32)  NOT NULL COMMENT '用户账号',
@@ -70,7 +70,7 @@ CREATE TABLE `t_user`
     `avatar`          VARCHAR(512) NULL     DEFAULT '' COMMENT '头像地址',
     `last_login_ip`   VARCHAR(64)  NULL     DEFAULT '' COMMENT '最后登录IP',
     `last_login_time` DATETIME     NULL     DEFAULT NULL COMMENT '最后登录时间',
-    `status`          TINYINT      NOT NULL DEFAULT 1 COMMENT '账号状态(0-停用 1-正常)',
+    `status`          TINYINT      NOT NULL DEFAULT 1 COMMENT '账号状态(0-禁用 1-启用)',
     `remark`          VARCHAR(512) NULL     DEFAULT NULL COMMENT '备注',
     `create_by`       VARCHAR(64)  NULL     DEFAULT '' COMMENT '创建用户',
     `create_time`     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -84,8 +84,8 @@ CREATE TABLE `t_user`
   COLLATE = utf8mb4_unicode_ci COMMENT = '用户表';
 
 -- 用户岗位表
-DROP TABLE IF EXISTS `t_user_post`;
-CREATE TABLE `t_user_post`
+DROP TABLE IF EXISTS `sys_user_post`;
+CREATE TABLE `sys_user_post`
 (
     `id`          BIGINT      NOT NULL AUTO_INCREMENT COMMENT 'id',
     `user_id`     BIGINT      NOT NULL COMMENT '用户id',
@@ -102,8 +102,8 @@ CREATE TABLE `t_user_post`
   COLLATE = utf8mb4_unicode_ci COMMENT = '用户岗位表';
 
 -- 角色表
-DROP TABLE IF EXISTS `t_role`;
-CREATE TABLE `t_role`
+DROP TABLE IF EXISTS `sys_role`;
+CREATE TABLE `sys_role`
 (
     `id`                  BIGINT       NOT NULL AUTO_INCREMENT COMMENT '角色id',
     `name`                VARCHAR(64)  NOT NULL COMMENT '角色名称',
@@ -112,7 +112,7 @@ CREATE TABLE `t_role`
     `data_scope_dept_ids` VARCHAR(512) NOT NULL DEFAULT '' COMMENT '数据范围(指定部门数组)',
     `type`                TINYINT      NOT NULL COMMENT '角色类型',
     `sort`                INT          NOT NULL DEFAULT 0 COMMENT '显示排序',
-    `status`              TINYINT      NOT NULL DEFAULT 1 COMMENT '角色状态(0-停用 1-正常)',
+    `status`              TINYINT      NOT NULL DEFAULT 1 COMMENT '角色状态(0-禁用 1-启用)',
     `remark`              VARCHAR(512) NULL     DEFAULT NULL COMMENT '备注',
     `create_by`           VARCHAR(64)  NULL     DEFAULT '' COMMENT '创建用户',
     `create_time`         DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -126,8 +126,8 @@ CREATE TABLE `t_role`
   COLLATE = utf8mb4_unicode_ci COMMENT = '角色表';
 
 -- 用户角色表
-DROP TABLE IF EXISTS `t_user_role`;
-CREATE TABLE `t_user_role`
+DROP TABLE IF EXISTS `sys_user_role`;
+CREATE TABLE `sys_user_role`
 (
     `id`          BIGINT      NOT NULL AUTO_INCREMENT COMMENT 'id',
     `user_id`     BIGINT      NOT NULL COMMENT '用户id',
@@ -144,8 +144,8 @@ CREATE TABLE `t_user_role`
   COLLATE = utf8mb4_unicode_ci COMMENT = '用户角色表';
 
 -- 菜单表
-DROP TABLE IF EXISTS `t_menu`;
-CREATE TABLE `t_menu`
+DROP TABLE IF EXISTS `sys_menu`;
+CREATE TABLE `sys_menu`
 (
     `id`             BIGINT       NOT NULL AUTO_INCREMENT COMMENT '菜单id',
     `parent_id`      BIGINT       NOT NULL DEFAULT 0 COMMENT '父菜单id',
@@ -160,7 +160,7 @@ CREATE TABLE `t_menu`
     `keepalive`      BIT(1)       NOT NULL DEFAULT b'1' COMMENT '是否缓存(0-否 1-是)',
     `always_show`    BIT(1)       NOT NULL DEFAULT b'1' COMMENT '是否总是显示(0-否 1-是)',
     `sort`           INT          NOT NULL DEFAULT 0 COMMENT '显示排序',
-    `status`         TINYINT      NOT NULL DEFAULT 1 COMMENT '菜单状态(0-停用 1-正常)',
+    `status`         TINYINT      NOT NULL DEFAULT 1 COMMENT '菜单状态(0-禁用 1-启用)',
     `create_by`      VARCHAR(64)  NULL     DEFAULT '' COMMENT '创建用户',
     `create_time`    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_by`      VARCHAR(64)  NULL     DEFAULT '' COMMENT '更新用户',
@@ -173,8 +173,8 @@ CREATE TABLE `t_menu`
   COLLATE = utf8mb4_unicode_ci COMMENT = '菜单表';
 
 -- 角色菜单表
-DROP TABLE IF EXISTS `t_role_menu`;
-CREATE TABLE `t_role_menu`
+DROP TABLE IF EXISTS `sys_role_menu`;
+CREATE TABLE `sys_role_menu`
 (
     `id`          BIGINT      NOT NULL AUTO_INCREMENT COMMENT 'id',
     `role_id`     BIGINT      NOT NULL COMMENT '角色id',

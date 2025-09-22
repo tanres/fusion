@@ -32,6 +32,8 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <mybatis-plus.version>3.5.14</mybatis-plus.version>
+        <knife4j.version>4.5.0</knife4j.version>
+        <hutool.version>5.8.40</hutool.version>
 
         <!-- maven相关 -->
         <java.version>17</java.version>
@@ -72,9 +74,35 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
+            <!-- knife4j -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <!-- hutool -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tanres</groupId>
+                <artifactId>fusion-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.tanres</groupId>
                 <artifactId>fusion-spring-boot-starter-redis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tanres</groupId>
+                <artifactId>fusion-spring-boot-starter-mybatis</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>
